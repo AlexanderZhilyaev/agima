@@ -23,11 +23,11 @@ public class ValueOfCurrency extends AsyncTask<String, Void, Map> {
     @Override
     public Map<String, String> doInBackground(String... date) {
         try {
-            String ma = Arrays.toString(date);
+            String dateStr = Arrays.toString(date);
 
-            ma = ma.substring(1,ma.length()-1);//Костыль
+            dateStr= dateStr.substring(1,dateStr.length()-1);//Костыль
 
-            URL url = new URL(R.string.my_feed + ma);
+            URL url = new URL("http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + dateStr);
             URLConnection conn = url.openConnection();
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
