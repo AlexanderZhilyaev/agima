@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.user_pc.currency.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/FrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignWithParentIfMissing="false">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/dateTextTop"
+            android:textSize="30sp"/>
+
+
+        <EditText
+            android:id="@+id/dateText"
+            android:layout_width="@dimen/widthDateText"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="@dimen/marginTopDateText"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/nameCurLeftEditText"
+            android:layout_width="@dimen/widthEditTextValue"
+            android:layout_height="wrap_content"
+            android:text="@string/textNameEUR"
+            android:layout_gravity="left|top"
+            android:layout_marginTop="@dimen/marginTopEurEditText"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/nameCurRightEditText"
+            android:layout_width="@dimen/widthEditTextValue"
+            android:layout_height="wrap_content"
+            android:text="@string/textNameEUR"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="@dimen/marginTopEurEditText"
+            android:focusable="false"/>
+
+        <EditText
+            android:id="@+id/valueLeftEditText"
+            android:layout_width="@dimen/widthEditTextValue"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginTop="@dimen/marginTopValueEditText"
+            android:hint="1"
+            android:inputType="number"
+            />
+
+        <EditText
+            android:id="@+id/valueRightEditText"
+            android:layout_width="@dimen/widthEditTextValue"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="@dimen/marginTopValueEditText"
+            android:focusable="false"/>
+
+        <TextView
+            android:id="@+id/valueUsdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/marginBotTextUSD"
+            android:text="@string/textViewUSD"
+            android:textColor="@color/black"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/textSizeEUR_USd"/>
+
+        <TextView
+            android:id="@+id/valueEurTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/marginTextEUR"
+            android:text="@string/textViewEUR"
+            android:textColor="@color/black"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/textSizeEUR_USd"/>
+
+        <include
+            layout="@layout/list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <include
+            layout="@layout/list_item_r"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+</RelativeLayout>

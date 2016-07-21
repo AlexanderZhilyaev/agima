@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Currency</string>
+    <string name="my_feed">http://www.cbr.ru/scripts/XML_daily.asp?date_req=</string>
+    <string name="dateTextTop">Дата</string>
+    <string name="textNameEUR">EUR</string>
+    <string name="textViewEUR">EUR: 70</string>
+    <string name="textViewUSD">USD: 64</string>
+
+</resources>
