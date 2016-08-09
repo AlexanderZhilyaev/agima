@@ -97,9 +97,31 @@ public class MainActivity extends AppCompatActivity {
         //Слушатели на выбор валют
         clickSelectOfCurrency();
         clickSelectOfCurrencyR();
-       //выбор даты
+        //выбор даты
         mDatePicker();
 
+    }
+
+    //Получение списка валют
+    public void recValues(String date) {
+        mValueOfCurrency = new ValueOfCurrency();
+        mValueOfCurrency.execute(date);
+
+        try {
+            myMap = mValueOfCurrency.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        SelectOfCurrency(myMap);
+        clickOfValue();
+        clickOfValueR();
+        ratioValue(myMap);
+        ratioNameLeft();
+        ratioNAmeRight();
+        mValueUsdTextView.setText("USD: " + myMap.get("USD"));
+        mValueEurTextView.setText("EUR: " + myMap.get("EUR"));
     }
 
     //Текущая дата
@@ -172,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-               ratioCurrency();
+                ratioCurrency();
             }
         });
     }
@@ -206,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView textView = (TextView) itemClicked;
                 String strText = textView.getText().toString();
                 mNameCurRightEditText.setText(strText);
+
                 mListViewR.setVisibility(View.INVISIBLE);
             }
         });
@@ -276,27 +299,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Получение списка валют
-    public void recValues(String date) {
-        mValueOfCurrency = new ValueOfCurrency();
-        mValueOfCurrency.execute(date);
 
-        try {
-            myMap = mValueOfCurrency.get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        SelectOfCurrency(myMap);
-        clickOfValue();
-        clickOfValueR();
-        ratioValue(myMap);
-        ratioNameLeft();
-        ratioNAmeRight();
-        mValueUsdTextView.setText("USD: " + myMap.get("USD"));
-        mValueEurTextView.setText("EUR: " + myMap.get("EUR"));
-    }
 }
-
-

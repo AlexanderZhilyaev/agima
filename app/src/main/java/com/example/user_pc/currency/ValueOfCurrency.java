@@ -20,14 +20,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
 public class ValueOfCurrency extends AsyncTask<String, Void, Map> {
 
     public static Map<String, String> currency = new HashMap<String, String>();
+    static final String URL_ADRRESS = "http://www.cbr.ru/scripts/XML_daily.asp?date_req=";
     @Override
     public Map<String, String> doInBackground(String... date) {
         try {
             String dateStr = Arrays.toString(date);
 
-            dateStr= dateStr.substring(1,dateStr.length()-1);//Костыль
+            dateStr= dateStr.substring(1,dateStr.length()-1);
 
-            URL url = new URL("http://www.cbr.ru/scripts/XML_daily.asp?date_req=" + dateStr);
+            URL url = new URL(URL_ADRRESS + dateStr);
             URLConnection conn = url.openConnection();
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
