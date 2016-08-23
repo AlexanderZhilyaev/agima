@@ -34,9 +34,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/marginTopDateText"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:inputType="none"/>
 
-        <EditText
+        <!--<EditText
             android:id="@+id/nameCurLeftEditText"
             android:layout_width="@dimen/widthEditTextValue"
             android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
             android:text="@string/textNameEUR"
             android:layout_gravity="right|top"
             android:layout_marginTop="@dimen/marginTopEurEditText"
-            android:focusable="false"/>
+            android:focusable="false"/>-->
 
         <EditText
             android:id="@+id/valueLeftEditText"
@@ -95,15 +96,22 @@
             android:textIsSelectable="true"
             android:textSize="@dimen/textSizeEUR_USd"/>
 
-        <include
-            layout="@layout/list_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerLeftCurr"
+            android:layout_gravity="center|left"
+            android:spinnerMode="dialog"
+            android:layout_marginBottom="100dp"/>
 
-        <include
-            layout="@layout/list_item_r"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerRightCurr"
+            android:layout_gravity="right|center_vertical"
+            android:spinnerMode="dialog"
+            android:layout_marginBottom="100dp"/>
+
 
     </FrameLayout>
 </RelativeLayout>

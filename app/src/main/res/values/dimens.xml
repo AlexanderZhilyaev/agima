@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="widthDateText">120dp</dimen>
     <dimen name="marginTopDateText">50dp</dimen>
-    <dimen name="widthEditTextValue">105dp</dimen>
+    <dimen name="widthEditTextValue">130dp</dimen>
     <dimen name="marginTopEurEditText">130dp</dimen>
     <dimen name="marginTopValueEditText">30dp</dimen>
     <dimen name="textSizeEUR_USd">20dp</dimen>

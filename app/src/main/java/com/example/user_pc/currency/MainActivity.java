@@ -1,10 +1,12 @@
 package com.example.user_pc.currency;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -57,8 +60,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    public EditText mNameCurLeftEditText;
-    public EditText mNameCurRightEditText;
     public EditText mValueLeftEditText;
     public EditText mValueRightEditText;
     public EditText mDateText;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView mValueEurTextView;
     ValueOfCurrency mValueOfCurrency;
     public ListView mListViewR;
+    public Spinner mSpinnerLeftCurr;
+    public Spinner mSpinnerRightCurr;
 
     Map<String, String> myMap = new HashMap<String, String>();
 
@@ -79,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
         today = Calendar.getInstance();
 
         mDateText = (EditText) findViewById(R.id.dateText);
-        mNameCurLeftEditText = (EditText) findViewById(R.id.nameCurLeftEditText);
-        mNameCurRightEditText = (EditText) findViewById(R.id.nameCurRightEditText);
         mValueRightEditText = (EditText) findViewById(R.id.valueRightEditText);
         mValueLeftEditText = (EditText) findViewById(R.id.valueLeftEditText);
         mFrameLayout = (FrameLayout) findViewById(R.id.FrameLayout);
@@ -88,19 +89,19 @@ public class MainActivity extends AppCompatActivity {
         mValueEurTextView = (TextView) findViewById(R.id.valueEurTextView);
         mListView = (ListView) findViewById(R.id.listView);
         mListViewR = (ListView) findViewById(R.id.listViewr);
-
+        mSpinnerLeftCurr = (Spinner) findViewById(R.id.spinnerLeftCurr);
+        mSpinnerRightCurr = (Spinner) findViewById(R.id.spinnerRightCurr);
 
         mDateText.setText(currentDate());
 
         //получение списка валют
         recValues(currentDate());
-        //Слушатели на выбор валют
-        clickSelectOfCurrency();
-        clickSelectOfCurrencyR();
         //выбор даты
         mDatePicker();
 
     }
+
+
 
     //Получение списка валют
     public void recValues(String date) {
@@ -114,12 +115,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+        clickOfValueL(myMap);
+        clickOfValueR(myMap);
+        ratioValue();
         SelectOfCurrency(myMap);
-        clickOfValue();
-        clickOfValueR();
-        ratioValue(myMap);
-        ratioNameLeft();
-        ratioNAmeRight();
         mValueUsdTextView.setText("USD: " + myMap.get("USD"));
         mValueEurTextView.setText("EUR: " + myMap.get("EUR"));
     }
@@ -129,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
         return new SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis());
     }
 
-    public void ratioCurrency(){
+    public void ratioCurrency() {
         float Value = 0;
-        float ValueCurrencyLeft = Float.parseFloat((myMap.get(mNameCurLeftEditText.getText().toString()).toString()).replace(',', '.'));
-        float ValueCurrencyRight = Float.parseFloat((myMap.get(mNameCurRightEditText.getText().toString()).toString()).replace(',', '.'));
+        float ValueCurrencyLeft = Float.parseFloat((myMap.get(mSpinnerLeftCurr.getSelectedItem().toString()).toString()).replace(',', '.'));
+        float ValueCurrencyRight = Float.parseFloat((myMap.get(mSpinnerRightCurr.getSelectedItem().toString()).toString()).replace(',', '.'));
 
 
         if (mValueLeftEditText.length() == 0) {
@@ -146,43 +145,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void ratioNameLeft(){
-        mNameCurLeftEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                ratioCurrency();
-            }
-        });
-    }
-
-    public void ratioNAmeRight(){
-        mNameCurRightEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                ratioCurrency();
-            }
-        });
-    }
-
 
     //Изменение значение количеста валют
-    public void ratioValue(final Map myMap) {
+    public void ratioValue() {
         mValueLeftEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -199,52 +164,44 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    //Показ списка выбора правой валюты
-    public void clickSelectOfCurrencyR() {
-        mNameCurRightEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListViewR.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
-    //Показ списка выбора левой валюты
-    public void clickSelectOfCurrency() {
-        mNameCurLeftEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListView.setVisibility(View.VISIBLE);
-            }
-        });
-    }
-
     //Выбор правой валюты
-    public void clickOfValueR() {
-        mListViewR.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-                TextView textView = (TextView) itemClicked;
-                String strText = textView.getText().toString();
-                mNameCurRightEditText.setText(strText);
+    public void clickOfValueR(Map myMap) {
+        final String[] val = new String[myMap.size()];
+        int i = 0;
+        for (Object key : myMap.keySet()) {
+            val[i] = key.toString();
+            i++;
+        }
+        mSpinnerRightCurr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+                ratioCurrency();
+            }
 
-                mListViewR.setVisibility(View.INVISIBLE);
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
 
     //Выбор левой валюты
-    public void clickOfValue() {
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    public void clickOfValueL(final Map myMap) {
+        final String[] val = new String[myMap.size()];
+        int i = 0;
+        for (Object key : myMap.keySet()) {
+            val[i] = key.toString();
+            i++;
+        }
+        mSpinnerLeftCurr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent,
+                                       View itemSelected, int selectedItemPosition, long selectedId) {
+                ratioCurrency();
+            }
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View itemClicked, int position,
-                                    long id) {
-                TextView textView = (TextView) itemClicked;
-                String strText = textView.getText().toString();
-                mNameCurLeftEditText.setText(strText);
-                mValueRightEditText.setText(myMap.get(strText).toString());
-                mListView.setVisibility(View.INVISIBLE);
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }
@@ -257,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
             i++;
         }
         ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, val);
-        mListViewR.setAdapter(adapter);
-        mListView.setAdapter(adapter);
+        mSpinnerLeftCurr.setAdapter(adapter);
+        mSpinnerRightCurr.setAdapter(adapter);
     }
 
     public void mDatePicker() {
@@ -297,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
         mDateText.setText(sdf.format(today.getTime()));
         recValues(sdf.format(today.getTime()));
     }
-
 
 
 }
